@@ -2,9 +2,10 @@
 
 class Session{
 
-	private $logged_in;
+	private $logged_in = false;
 	public $user_id;
 	public $message;
+	
 	
 	function __construct(){
 		session_start();
@@ -24,7 +25,7 @@ class Session{
 	
 	
 	public function login($user){
-		// database shuld find user based on username/password
+		// database should find user based on username/password
 		if($user){
 			$this->user_id = $_SESSION['user_id'] =  $user->id;
 			$this->logged_in = true;
@@ -76,4 +77,3 @@ class Session{
 
 $session = new Session();
 $message = $session->message();
-?>

@@ -22,7 +22,7 @@ class User extends DatabaseObject{
 	}
 	
 	
-	public static function authenticate($username="", $password="") {
+	public static function authenticate($username = "", $password = "") {
 		global $database;
 		$username = $database->escape_value($username);
 		$password = $database->escape_value($password);
@@ -40,7 +40,7 @@ class User extends DatabaseObject{
 	public static function find_all(){
 		return self::find_by_sql("SELECT * FROM " . self::$table_name);
 	}
-		
+	
 	
 	public static function find_by_id($id=0) {
 		$result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE id={$id} LIMIT 1");

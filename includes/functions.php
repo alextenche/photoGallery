@@ -10,6 +10,7 @@ function __autoload($class_name){
 	}
 }
 
+
 function strip_zeros_from_date( $marked_string="" ) {
   // first remove the marked zeros
   $no_zeros = str_replace('*0', '', $marked_string);
@@ -18,12 +19,14 @@ function strip_zeros_from_date( $marked_string="" ) {
   return $cleaned_string;
 }
 
+
 function redirect_to( $location = NULL ) {
   if ($location != NULL) {
     header("Location: {$location}");
     exit;
   }
 }
+
 
 function output_message($message="") {
   if (!empty($message)) { 
@@ -34,14 +37,12 @@ function output_message($message="") {
 }
 
 
-
-
-
-function include_layout_template($template=""){
+function include_layout_template($template = ""){
 	include(SITE_ROOT.DS.'public'.DS.'layouts'.DS.$template);
 }
 
-function datetime_to_text($datetime="") {
-  $unixdatetime = strtotime($datetime);
-  return strftime("%B %d, %Y at %I:%M %p", $unixdatetime);
+
+function datetime_to_text($datetime = ""){
+	$unixdatetime = strtotime($datetime);
+	return strftime("%B %d, %Y at %I:%M %p", $unixdatetime);
 }
