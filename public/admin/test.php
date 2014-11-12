@@ -6,16 +6,20 @@ if (!$session->is_logged_in()) { redirect_to("login.php"); }
 <?php include_layout_template('admin_header.php');?>
 <?php
 
-	$user = new User();
-	$user->username ="johnsmith";
-	$user->password ="password";
-	$user->first_name ="john";
-	$user->last_name ="smith";
+	/*$user = new User();
+	$user->username ="blade";
+	$user->password ="matrix";
+	$user->first_name ="keanu";
+	$user->last_name ="reeves";
 	$user->create();
 	
-	/*$user = User::find_by_id(2);
+	
+	
+	$user = User::find_by_id(2);
 	$user->password = "pass";
-	$user->save();*/
+	$user->update();
+	echo "updated user";*/
+	
 	
 	$user = User::find_by_id(3);
 	$user->delete();

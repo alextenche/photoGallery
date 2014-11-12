@@ -40,7 +40,7 @@ class Session{
 	}
 	
 
-	public function message($msg="") {
+	public function message($msg = "") {
 		if(!empty($msg)) {
 			// then this is "set message"
 			// make sure you understand why $this->message=$msg wouldn't work
