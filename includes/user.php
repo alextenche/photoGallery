@@ -47,6 +47,7 @@ class User extends DatabaseObject{
 		return !empty($result_array) ? array_shift($result_array) : false;
 	}
 	
+	
 	public static function count_all(){
 		global $database;
 		$sql = "SELECT COUNT(*) FROM ".self::$table_name;

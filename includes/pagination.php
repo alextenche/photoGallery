@@ -1,7 +1,6 @@
 <?php
 
-// This is a helper class to make paginating 
-// records easy.
+// This is a helper class to make paginating records easy.
 class Pagination {
 	
   public $current_page;
@@ -44,5 +43,3 @@ class Pagination {
 
 
 }
-
-?>

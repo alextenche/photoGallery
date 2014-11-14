@@ -30,7 +30,7 @@
 			<td><?php echo $photo->type; ?></td>
 			<td>
 				<a href="comments.php?id=<?php echo $photo->id; ?>">
-					<?php echo count($photo->comments()); ?>
+					<?php echo count($photo->comments()) . " comments"; ?>
 				</a>
 			</td>
 			<td><a href="delete_photo.php?id=<?php echo $photo->id; ?>">Delete</a></td>

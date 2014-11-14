@@ -1,54 +1,99 @@
 <?php
-
-// If it's going to need the database, then it's 
-// probably smart to require it before we start.
 require_once(LIB_PATH.DS.'database.php');
+require_once("../includes/initialize.php");
 
 class Comment extends DatabaseObject {
 
-  protected static $table_name="comments";
-  protected static $db_fields=array('id', 'photograph_id', 'created', 'author', 'body');
+	protected static $table_name="comments";
+	protected static $db_fields=array('id', 'photograph_id', 'created', 'author', 'body');
 
-  public $id;
-  public $photograph_id;
-  public $created;
-  public $author;
-  public $body;
+	public $id;
+	public $photograph_id;
+	public $created;
+	public $author;
+	public $body;
 
-  // "new" is a reserved word so we use "make" (or "build")
-	public static function make($photo_id, $author="Anonymous", $body="") {
-    if(!empty($photo_id) && !empty($author) && !empty($body)) {
+	
+	// try to send an email for an added comment
+	public function try_to_send_notification(){
+		
+		$mail = new PHPMailer();
+	
+		$mail->IsSMTP();
+		$mail->SMTPAuth      = true;   
+		$mail->SMTPKeepAlive = true;   
+		$mail->Host          = 'smtp.gmail.com'; 
+		$mail->Port          = 465;
+		$mail->SMTPSecure    = 'ssl';
+		$mail->Username      = 'alex.tenche@gmail.com';
+		$mail->Password      = 'andreiplesu';
+		$mail->SetFrom('alex.tenche@gmail.com', 'alexTenche');
+		$mail->AddReplyTo('alex.tenche@gmail.com', 'alexTenche');
+
+		$mail->FromName = "Sender Name";
+		$mail->From     = "";
+		$mail->AddAddress("alex.tenche@gmail.com", "alex.tenche");
+		$mail->Subject  = "Mail Test at ".strftime("%T", time());
+		$mail->Body     = $message;
+		$message = wordwrap($message,70);	
+		$created = datetime_to_text($this->created);
+		$mail->Body     = <<<EMAILBODY
+		
+A new comment has been received in Photo Gallery
+
+At {$this->created}, {$this->author} wrote:
+
+{$this->body}	
+	
+EMAILBODY;
+	
+		$result = $mail->Send();
+		echo $result ? 'Sent' : 'Error';
+		return $result ;
+	}
+	
+	
+	// "new" is a reserved word so we use "make" (or "build")
+	public static function make($photo_id, $author = "Anonymous", $body = "") {
+		date_default_timezone_set('Europe/Bucharest');
+		
+		if(!empty($photo_id) && !empty($author) && !empty($body)) {
 			$comment = new Comment();
-	    $comment->photograph_id = (int)$photo_id;
-	    $comment->created = strftime("%Y-%m-%d %H:%M:%S", time());
-	    $comment->author = $author;
-	    $comment->body = $body;
-	    return $comment;
+			$comment->photograph_id = (int)$photo_id;
+			$comment->created = strftime("%Y-%m-%d %H:%M:%S", time());
+			$comment->author = $author;
+			$comment->body = $body;
+			return $comment;
 		} else {
 			return false;
 		}
 	}
 	
-	public static function find_comments_on($photo_id=0) {
-    global $database;
-    $sql = "SELECT * FROM " . self::$table_name;
-    $sql .= " WHERE photograph_id=" .$database->escape_value($photo_id);
-    $sql .= " ORDER BY created ASC";
-    return self::find_by_sql($sql);
+	
+	// return all the comments of a photograph
+	public static function find_comments_on($photo_id = 0) {
+		global $database;
+		$sql  = "SELECT * FROM " . self::$table_name;
+		$sql .= " WHERE photograph_id=" .$database->escape_value($photo_id);
+		$sql .= " ORDER BY created ASC";
+		return self::find_by_sql($sql);
 	}
 	
+	
 	// Common Database Methods
+	//----------------------------------------------------------------------------------
 	public static function find_all() {
 		return self::find_by_sql("SELECT * FROM ".self::$table_name);
-  }
+	}
   
-  public static function find_by_id($id=0) {
-    $result_array = self::find_by_sql("SELECT * FROM ".self::$table_name." WHERE id={$id} LIMIT 1");
+  
+	public static function find_by_id($id=0) {
+		$result_array = self::find_by_sql("SELECT * FROM ".self::$table_name." WHERE id={$id} LIMIT 1");
 		return !empty($result_array) ? array_shift($result_array) : false;
-  }
+	}
   
   
-  public static function count_all(){
+	public static function count_all(){
 		global $database;
 		$sql = "SELECT COUNT(*) FROM ".self::$table_name;
 		$result_set = $database->query($sql);

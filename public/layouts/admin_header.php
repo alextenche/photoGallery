@@ -5,7 +5,7 @@
   </head>
   <body>
     <div id="header">
-      <h1>Photo Gallery: Admiaaan</h1>
+      <h1>Photo Gallery: Admin</h1>
 	  <p style="float: right; color: black;"> Logged as: <?php ?> </p>
     </div>
     <div id="main">
