@@ -148,6 +148,7 @@ class User extends DatabaseObject{
 	}
 	
 	
+
 	// update an existing user
 	public function update() {
 		global $database;
@@ -163,6 +164,7 @@ class User extends DatabaseObject{
 		$database->query($sql);
 		return ($database->affected_rows() == 1) ? true : false;
 	}
+	
 	
 	
 	// delete user

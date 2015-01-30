@@ -1,6 +1,11 @@
 </div>
+
     <div id="footer">
-		<a href="http://alextenche.jolinar.org" style="text-decoration: none; color: white">alexTenche <?php echo date("Y", time()); ?></a>
+      <div class="container">
+      <br>
+      <p style="text-align: center">
+		<a href="http://alextenche.jolinar.org" style="text-align: center;text-decoration: none; color: black">alexTenche <?php echo date("Y", time()); ?></a>
+		</p>
 	</div>
   </body>
 </html>

@@ -9,19 +9,19 @@ if (!$session->is_logged_in()) { redirect_to("login.php"); }
 	/*$user = new User();
 	$user->username ="blade";
 	$user->password ="matrix";
-	$user->first_name ="keanu";
-	$user->last_name ="reeves";
-	$user->create();
+	$user->first_name ="blade";
+	$user->last_name ="daywalker";
+	$user->create();*/
 	
 	
 	
-	$user = User::find_by_id(2);
+	/*$user = User::find_by_id(4);
 	$user->password = "pass";
 	$user->update();
 	echo "updated user";*/
 	
 	
-	$user = User::find_by_id(3);
+	$user = User::find_by_id(4);
 	$user->delete();
 	echo $user->first_name;
 
