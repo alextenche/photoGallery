@@ -131,8 +131,8 @@ class User extends DatabaseObject{
 	// create a new user
 	public function create() {
 		global $database;
-		
 		$attributes = $this->sanitized_attributes();
+
 		$sql  = "INSERT INTO ".self::$table_name." (";
 		$sql .= join(", ", array_keys($attributes));
 		$sql .= ") VALUES ('";
@@ -152,20 +152,21 @@ class User extends DatabaseObject{
 	// update an existing user
 	public function update() {
 		global $database;
-		
 		$attributes = $this->sanitized_attributes();
 		$attribute_pairs = array();
 		foreach($attributes as $key => $value) {
 			$attribute_pairs[] = "{$key}='{$value}'";
 		}
+
 		$sql  = "UPDATE ".self::$table_name." SET ";
 		$sql .= join(", ", $attribute_pairs);
 		$sql .= " WHERE id=". $database->escape_value($this->id);
+		
 		$database->query($sql);
 		return ($database->affected_rows() == 1) ? true : false;
 	}
 	
-	
+
 	
 	// delete user
 	public function delete() {

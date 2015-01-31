@@ -3,13 +3,10 @@
 <head>
   <meta name="author" content="Tenche Alexandru">
   <title>photoGallery</title>
-  <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <style type="text/css">
-    .main{
-      
+    .btn-danger{
+      width: 45px;
     }
     .thumb {
       margin-bottom: 30px;
@@ -88,7 +85,7 @@ body {
     <div class="container">
       <div class="navbar-header">
 
-        <a href="#" class="navbar-brand">alexTenche</a>
+        <a href="/photoGallery/public/index.php" class="navbar-brand">alexTenche</a>
 
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>

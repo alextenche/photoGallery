@@ -1,24 +1,28 @@
-<?php require_once("../../includes/initialize.php"); ?>
-<?php if (!$session->is_logged_in()) { redirect_to("login.php"); } ?>
-<?php
-	// find all the photos
-	$photos = Photograph::find_all();
-?>
+<?php require_once("../../includes/initialize.php");
 
-<?php include_layout_template('admin_header.php'); ?>
+if (!$session->is_logged_in()) { redirect_to("login.php"); }
 
-<h2>Photographs</h2>
+$photos = Photograph::find_all();
 
-<?php echo output_message($message); ?>
+include_layout_template('admin_header.php'); ?>
 
-<table class="bordered">
+<div class="row">
+	<h1 class="page-header">photoUpload</h1>
+
+<?php if (output_message($message) != "") : ?>
+	<div class="alert alert-info" role="alert">
+		<?php echo output_message($message); ?>
+	</div>
+<?php endif; ?>
+
+<table class="table table-striped">
 	<tr>
-		<th>Image</th>
-		<th>Filename</th>
-		<th>Caption</th>
-		<th>Size</th>
-		<th>Type</th>
-		<th>Comments</th>
+		<th>photo</th>
+		<th>filename</th>
+		<th>description</th>
+		<th>size</th>
+		<th>type</th>
+		<th>comments</th>
 		<th>&nbsp;</th>
 	</tr>
 	<?php foreach($photos as $photo): ?>
@@ -33,12 +37,15 @@
 					<?php echo count($photo->comments()) . " comments"; ?>
 				</a>
 			</td>
-			<td><a href="delete_photo.php?id=<?php echo $photo->id; ?>">Delete</a></td>
+			<td><a class="btn btn-danger" href="delete_photo.php?id=<?php echo $photo->id; ?>">delete</a></td>
 		</tr>
 	<?php endforeach; ?>
 </table>
-
 <br>
-<a href="photo_upload.php">Upload a new photograph</a>
+<a class="btn btn-primary" href="photo_upload.php">upload photo</a>
+<p><br></p>
+</div>
+
+
 
 <?php include_layout_template('admin_footer.php'); ?>

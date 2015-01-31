@@ -1,36 +1,49 @@
-<?php
-require_once('../../includes/initialize.php');
+<?php require_once('../../includes/initialize.php');
+
 if (!$session->is_logged_in()) { redirect_to("login.php"); }
-?>
-<?php
-	$max_file_size = 1048576; // 10485760 =  10 MB
-	
-	if(isset($_POST['submit'])) {
-		$photo = new Photograph();
-		$photo->caption = $_POST['caption'];
-		$photo->attach_file($_FILES['file_upload']);
-		if($photo->save()) {
-			// Success
-			$session->message("Photograph uploaded successfully");
-			redirect_to('list_photos.php');
-		} else {
-			// Failure
-			$message = join("<br>", $photo->errors);
-		}
+
+$max_file_size = 1048576; // 10485760 =  10 MB
+
+// form processing
+if(isset($_POST['submit'])) {
+	$photo = new Photograph();
+	$photo->caption = $_POST['caption'];
+	$photo->attach_file($_FILES['file_upload']);
+	if($photo->save()) {
+		$session->message("Photograph uploaded successfully");
+		redirect_to('list_photos.php');
+	} else {
+		$message = join("<br>", $photo->errors);
 	}
-	
-?>
+}
 
-<?php include_layout_template('admin_header.php'); ?>
+include_layout_template('admin_header.php'); ?>
 
-	<h2>Photo Upload</h2>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">photoUpload</h1>
+	</div>
 
-	<?php echo output_message($message); ?>
+	<div class="alert alert-info" role="alert">
+		<?php echo output_message($message); ?>
+	</div>
+
 	<form action="photo_upload.php" enctype="multipart/form-data" method="POST">
-		<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_file_size; ?>" />
-		<p><input type="file" name="file_upload" /></p>
-		<p>Caption: <input type="text" name="caption" value="" /></p>
-		<input type="submit" name="submit" value="Upload" />
+
+		<div class="form-group">
+			<label for="file">file input</label>
+			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_file_size; ?>">
+			<input type="file" name="file_upload">
+		</div>
+		<div class="form-group">
+			<label for="caption">photo description</label>
+			<input type="text" class="form-control" placeholder="Enter a photo description" name="caption" value="">
+		</div>
+		
+		<input class="btn btn-success" type="submit" name="submit" value="Upload">
+		<button class="btn btn-danger">Cancel</button>
+
 	</form>
-  
+</div>
+
 <?php include_layout_template('admin_footer.php'); ?>
