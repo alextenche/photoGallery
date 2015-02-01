@@ -1,21 +1,11 @@
 <!doctype html>
-<html>
+<html> 
 <head>
-  <title>Photo Gallery: Admin</title>
-	<meta name="author" content="Alexandru Tenche">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <meta name="author" content="Tenche Alexandru">
+  <title>photoGallery</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  
   <style type="text/css">
-    .main{
-      
-    }
-    .thumb {
-      margin-bottom: 30px;
-    }
-    .img-responsive{
-      max-height: 200px;
-      min-height: 200px;
-    }
-    
 
     @media all and (max-width: 1200px) { /* screen size until 1200px */
       body {
@@ -33,34 +23,35 @@
       }
     }
 
-
-
-
-html,
-body {
-  height: 100%;
-  /* The html and body elements cannot have any padding or margin. */
-}
-
-/* Wrapper for page content to push down footer */
-.main {
-
-  min-height: 100%;
-  height: auto;
-  /* Negative indent footer by its height */
-  margin-top: 40px;
-  margin: 20px auto -60px;
-  /* Pad bottom by footer height */
-  padding: 0 0 60px;
-  margin-top: 40px;
-}
-
-/* Set the fixed height of the footer here */
-#footer {
-  /*height: 60px;*/
-  background-color: #ccc;
-}
-
+    .thumb {
+      margin-bottom: 30px;
+    }
+    .img-responsive{
+      max-height: 200px;
+      min-height: 200px;
+    }
+    .thumbnail.with-caption {
+      display: inline-block;
+      background: #f5f5f5;
+    }
+    .thumbnail.with-caption p {
+      margin: 0;
+      padding-top: 0.5em;
+    }
+    .thumbnail.with-caption small:before {
+      content: '\2014 \00A0';
+    }
+    .thumbnail.with-caption small {
+      width: 100%;
+      text-align: right;
+      display: inline-block;
+      color: #999;
+    }
+    .main {}
+    footer{
+      background-color: #178acc;
+      height: 250px;
+    }
   </style>
 </head>
 
@@ -100,5 +91,3 @@ body {
 
     </div>
   </div><!-- navbar -->
-
-  <div class="container main">

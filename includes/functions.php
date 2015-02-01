@@ -45,8 +45,9 @@ function include_layout_template($template = ""){
 // better date-time display
 function datetime_to_text($datetime = ""){
 	$unixdatetime = strtotime($datetime);
-	return strftime("%d %B, %Y at %I:%M %p", $unixdatetime);
+	return strftime("%B %d, %Y at %I:%M %p", $unixdatetime);
 }
+
 
 function log_action($action, $message = ""){
 	date_default_timezone_set('Europe/Bucharest');

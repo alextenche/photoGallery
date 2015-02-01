@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10.6
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
--- Gazda: localhost
--- Timp de generare: 19 Dec 2014 la 00:04
--- Versiune server: 5.5.40-cll
--- Versiune PHP: 5.4.23
+-- Host: 127.0.0.1
+-- Generation Time: 01 Feb 2015 la 22:09
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Bază de date: `jolinar_photoGallery`
+-- Database: `photo_gallery`
 --
 
 -- --------------------------------------------------------
@@ -29,32 +29,28 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `photograph_id` int(11) NOT NULL,
-  `created` date NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `body` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+  `created` datetime NOT NULL,
+  `author` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `body` text CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `photograph_id` (`photograph_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 --
 -- Salvarea datelor din tabel `comments`
 --
 
 INSERT INTO `comments` (`id`, `photograph_id`, `created`, `author`, `body`) VALUES
-(4, 11, '2014-07-06', 'lexu', 'nice lemne'),
-(5, 12, '2014-07-07', 'Lexu', 'cool :)'),
-(6, 17, '2014-07-09', 'Lexu', 'No, this is Tappppiiiiaaaa'),
-(7, 21, '2014-07-09', 'Lexu', 'am dat aproape din gresela peste poza asta.\r\n\r\nchiar scrie TENCHE la astia in curte'),
-(8, 21, '2014-07-10', 'aaa', 'sasdasdsad'),
-(9, 22, '2014-07-11', 'lexu', 'ye, really :)'),
-(10, 24, '2014-07-21', 'lexu', 'lol asta da poza de cv'),
-(11, 27, '2014-07-21', 'lexu', 'e poza pe o parte nu va speriati'),
-(12, 24, '2014-07-21', 'lexu', 'stau in zdrenianin si imi inec amaru :)'),
-(13, 21, '2014-11-19', 'One', 'e gata cafa?'),
-(14, 14, '2014-11-21', 'Alex', 'testing mail'),
-(15, 24, '2014-11-25', 'Vonavi', 'mda..dece amaru herr sef..ca o fo fain bre'),
-(16, 28, '2014-11-25', 'Vonavi', 'rupt in fata...cu high pressure blood ahahhahah dar o fost...super,cred ca as merge in fiecare weekend...plus am gasit un minus la site cand dai back se duce la primele poze nu la care te uiti...\r\n\r\nTen Hut!!!'),
-(17, 30, '2014-11-25', 'Vonavi', 'mda pisicu ...nu il uit ...:D zero stres nimeni nu il deranja din somnul lui de veci...pisic lenes ca cel din poza nu am vazut :D'),
-(18, 21, '2014-12-19', 'alex', 'acuma am vazu commentu lu alexone, si deasemena ca nu mere bine ora de la comment');
+(4, 11, '2014-07-06 00:00:00', 'lexu', 'nice lemne'),
+(6, 17, '2014-07-09 00:00:00', 'Lexu', 'No, this is Tappppiiiiaaaa'),
+(7, 21, '2014-07-09 00:00:00', 'Lexu', 'am dat aproape din gresela peste poza asta.\r\n\r\nchiar scrie TENCHE la astia in curte'),
+(9, 22, '2014-07-11 00:00:00', 'lexu', 'ye, really :)'),
+(10, 24, '2014-07-21 00:00:00', 'lexu', 'lol asta da poza de cv'),
+(11, 27, '2014-07-21 00:00:00', 'lexu', 'e poza pe o parte nu va speriati'),
+(12, 24, '2014-07-21 00:00:00', 'lexu', 'stau in zdrenianin si imi inec amaru :)'),
+(18, 20, '2014-11-12 14:15:05', 'lexu', 'asa da'),
+(25, 13, '2015-02-01 18:40:14', '', 'testing'),
+(30, 28, '2015-02-01 20:38:16', 'anonymous', 'he he');
 
 -- --------------------------------------------------------
 
@@ -64,12 +60,12 @@ INSERT INTO `comments` (`id`, `photograph_id`, `created`, `author`, `body`) VALU
 
 CREATE TABLE IF NOT EXISTS `photographs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(255) NOT NULL,
-  `type` varchar(100) NOT NULL,
+  `filename` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `type` varchar(100) CHARACTER SET utf8 NOT NULL,
   `size` int(11) NOT NULL,
-  `caption` varchar(255) NOT NULL,
+  `caption` varchar(255) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
 -- Salvarea datelor din tabel `photographs`
@@ -87,14 +83,10 @@ INSERT INTO `photographs` (`id`, `filename`, `type`, `size`, `caption`) VALUES
 (17, 'DSC00520.jpg', 'image/jpeg', 194855, 'This is Sparta !?'),
 (18, 'Vona exploring.jpg', 'image/jpeg', 227305, 'Vona catre Pestera lui Dutu - varianta prin parau'),
 (22, 'timis.jpg', 'image/jpeg', 119410, 'pe Timis'),
-(23, 'DSC00581.JPG', 'image/jpeg', 108381, 'Ancient Aliens clar'),
-(24, 'DSC00610.JPG', 'image/jpeg', 146083, 'suparattt sunt doamne iara'),
 (25, 'DSC00684.JPG', 'image/jpeg', 143888, 'streets of novisad - fara michael douglas'),
 (26, 'DSC00723.JPG', 'image/jpeg', 122091, 'cetatea exit'),
 (27, 'DSC00735.JPG', 'image/jpeg', 107031, 'sarbii sunt si ei romantici'),
-(28, 'DSC00742.JPG', 'image/jpeg', 180468, 'echipa cam tabarata'),
 (29, 'DSC00746.JPG', 'image/jpeg', 188570, 'monanul castelan (o bagat rock toata noaptea)'),
-(30, 'DSC00763.JPG', 'image/jpeg', 173603, 'prietenii animalelor'),
 (31, 'DSC00752.JPG', 'image/jpeg', 138901, 'the bridge pe care am venit'),
 (32, 'DSC00780.jpg', 'image/jpeg', 124533, 'Sorela o intrat in afaceri');
 
@@ -106,19 +98,20 @@ INSERT INTO `photographs` (`id`, `filename`, `type`, `size`, `caption`) VALUES
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(40) NOT NULL,
-  `first_name` varchar(30) NOT NULL,
-  `last_name` varchar(30) NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(40) CHARACTER SET utf8 NOT NULL,
+  `first_name` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `last_name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Salvarea datelor din tabel `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`) VALUES
-(1, 'alex', 'pass', 'alex', 'tenche');
+(1, 'alex', 'pass', 'alex', 'tenche'),
+(2, 'keanu', 'pass', 'keanu', 'reeves');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

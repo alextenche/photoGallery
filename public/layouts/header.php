@@ -3,11 +3,26 @@
 <head>
   <meta name="author" content="Tenche Alexandru">
   <title>photoGallery</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../public/css/bootstrap.css">
+  
   <style type="text/css">
-    .btn-danger{
-      width: 45px;
+
+    @media all and (max-width: 1200px) { /* screen size until 1200px */
+      body {
+        font-size: 1.6em; /* 1.5x default size */
+      }
     }
+    @media all and (max-width: 1000px) { /* screen size until 1000px */
+      body {
+        font-size: 1.3em; /* 1.2x default size */
+      }
+    }
+    @media all and (max-width: 500px) { /* screen size until 500px */
+      body {
+        font-size: 0.9em; /* 0.8x default size */
+      }
+    }
+
     .thumb {
       margin-bottom: 30px;
     }
@@ -32,51 +47,11 @@
       display: inline-block;
       color: #999;
     }
-
-    @media all and (max-width: 1200px) { /* screen size until 1200px */
-      body {
-        font-size: 1.6em; /* 1.5x default size */
-      }
+    .main {}
+    footer{
+      background-color: #178acc;
+      height: 250px;
     }
-    @media all and (max-width: 1000px) { /* screen size until 1000px */
-      body {
-        font-size: 1.3em; /* 1.2x default size */
-      }
-    }
-    @media all and (max-width: 500px) { /* screen size until 500px */
-      body {
-        font-size: 0.9em; /* 0.8x default size */
-      }
-    }
-
-
-
-
-html,
-body {
-  height: 100%;
-  /* The html and body elements cannot have any padding or margin. */
-}
-
-/* Wrapper for page content to push down footer */
-.main {
-
-  min-height: 100%;
-  height: auto;
-  /* Negative indent footer by its height */
-  margin-top: 40px;
-  margin: 20px auto -60px;
-  /* Pad bottom by footer height */
-  padding: 0 0 60px;
-  margin-top: 40px;
-}
-
-/* Set the fixed height of the footer here */
-#footer {
-  /*height: 60px;*/
-  background-color: #ccc;
-}
-
   </style>
 </head>
 
@@ -116,5 +91,3 @@ body {
 
     </div>
   </div><!-- navbar -->
-
-  <div class="container main">

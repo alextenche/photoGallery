@@ -90,8 +90,9 @@ class Photograph extends DatabaseObject {
 	}
 	
 	
-	// first remove database entry, second remove the file
+	// remove photo from database and delete the file
 	public function destroy() {
+		// first remove database entry, second remove the file
 		if($this->delete()) {
 			$target_path = SITE_ROOT.DS.'public'.DS.$this->image_path();
 			return unlink($target_path) ? true : false;

@@ -19,31 +19,31 @@ if(isset($_POST['submit'])) {
 
 include_layout_template('admin_header.php'); ?>
 
-<div class="row">
-	<div class="col-lg-12">
+<div class="container main">
+	<div class="row">
 		<h1 class="page-header">photoUpload</h1>
+
+		<?php if (output_message($message) != "") : ?>
+			<div class="alert alert-info" role="alert">
+				<?php echo output_message($message); ?>
+			</div>
+		<?php endif; ?>
+
+		<form action="photo_upload.php" enctype="multipart/form-data" method="post">
+			<div class="form-group">
+				<label for="file">file input</label>
+				<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_file_size; ?>">
+				<input type="file" name="file_upload">
+			</div>
+			<div class="form-group">
+				<label for="caption">photo description</label>
+				<input type="text" class="form-control" placeholder="Enter a photo description" name="caption" value="">
+			</div>
+			<input class="btn btn-success" type="submit" name="submit" value="Upload">
+			<a class="btn btn-danger" href="/photoGallery/public/admin/list_photos.php">Cancel</a>
+		</form>
+		<p><br></p>
 	</div>
-
-	<div class="alert alert-info" role="alert">
-		<?php echo output_message($message); ?>
-	</div>
-
-	<form action="photo_upload.php" enctype="multipart/form-data" method="POST">
-
-		<div class="form-group">
-			<label for="file">file input</label>
-			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_file_size; ?>">
-			<input type="file" name="file_upload">
-		</div>
-		<div class="form-group">
-			<label for="caption">photo description</label>
-			<input type="text" class="form-control" placeholder="Enter a photo description" name="caption" value="">
-		</div>
-		
-		<input class="btn btn-success" type="submit" name="submit" value="Upload">
-		<button class="btn btn-danger">Cancel</button>
-
-	</form>
 </div>
 
 <?php include_layout_template('admin_footer.php'); ?>
