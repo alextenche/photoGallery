@@ -51,8 +51,8 @@ $comments = $photo->comments();	?>
 		<table class="table table-striped">
 			<?php foreach($comments as $comment): ?>
 				<tr>
+					<td><b><?php echo htmlentities($comment->author); ?></b></td>
 					<td><?php echo strip_tags($comment->body, '<strong><em><p>'); ?></td>
-					<td><?php echo htmlentities($comment->author); ?></td>
 					<td><?php echo datetime_to_text($comment->created); ?></td>
 				</tr>
 			<?php endforeach; ?>

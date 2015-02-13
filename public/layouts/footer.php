@@ -1,8 +1,9 @@
-  	<footer class="footer">
+  	</div>
+ 	<div id="footer">
       <div class="container">
-        <p class="text-muted"><a href="http://alextenche.jolinar.org" style="text-align: center;text-decoration: none; color: black">alexTenche <?php echo date("Y", time()); ?></a></p>
+        <p class="muted credit"><a href="http://alextenche.jolinar.org" style="text-align: center;text-decoration: none; color: black">alexTenche <?php echo date("Y", time()); ?></a>   </p>
       </div>
-    </footer>
+    </div>
 
 </body>
 </html>

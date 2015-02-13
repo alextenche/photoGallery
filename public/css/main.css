@@ -1,28 +1,78 @@
-/* Site Colors:
-  #1A446C - blue grey
-  #689DC1 - light blue
-  #D4E6F4 - very light blue
-  #EEE4B9 - light tan
-  #8D0D19 - burgundy
-*/
+@media all and (max-width: 1200px) { /* screen size until 1200px */
+  body {
+    font-size: 1.6em; /* 1.5x default size */
+  }
+}
 
-html { height: 100%; width: 100%; }
-body { height: 100%; width: 100%; margin: 0; padding: 0; border: 0; background: #FFFFFF;
-  font: 13px/15px Verdana,Arial,Helvetica,sans-serif; }
-img { border: none; }
-table, tr, td, tr { border-collapse: collapse; vertical-align: top; text-align: left;
-  font: 13px/15px Verdana,Arial,Helvetica,sans-serif; }
-a { color: #8D0D19;}
+@media all and (max-width: 1000px) { /* screen size until 1000px */
+  body {
+    font-size: 1.3em; /* 1.2x default size */
+  }
+}
 
-#header { height: 70px; text-align: left; background: #1A446C; color: #D4E6F4; }
-#header h1 { padding: 1em; margin: 0;}
+@media all and (max-width: 500px) { /* screen size until 500px */
+  body {
+    font-size: 0.9em; /* 0.8x default size */
+  }
+}
 
-/* Note: IE 5 & 6 won't understand min-height */
-#main { min-height: 600px; width: 100%; background: #EEE4B9; padding: 2em;}
+.thumb {
+  margin-bottom: 30px;
+}
 
-#footer { height: 2em; padding: 1em; text-align: center; 
-  background: #1A446C;  color: #D4E6F4; }
+.img-responsive{
+  max-height: 200px;
+  min-height: 200px;
+}
 
-table.bordered tr th, table.bordered tr td { border: 1px solid #000000; }
+.thumbnail.with-caption {
+  display: inline-block;
+  background: #f5f5f5;
+}
 
-#pagination .selected { font-weight: bold; color: #8D0D19;}
+.thumbnail.with-caption p {
+  margin: 0;
+  padding-top: 0.5em;
+}
+
+.thumbnail.with-caption small:before {
+  content: '\2014 \00A0';
+}
+
+.thumbnail.with-caption small {
+  width: 100%;
+  text-align: right;
+  display: inline-block;
+  color: #999;
+}
+
+ /* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+  height: 60px;
+}
+#footer {
+  background-color: #f5f5f5;
+  background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+  background-repeat: no-repeat;
+  text-align: center;
+  padding-top: 20px;
+}

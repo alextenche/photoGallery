@@ -29,9 +29,9 @@ include_layout_template('header.php'); ?>
 		<?php endforeach; ?>
 
 		<div class="row">
-			<div class="col-xs-4 col-xs-offset-5" id="pagination">
+			<div class="col-xs-4 col-xs-offset-5">
 				<nav>
-					<ul class="pagination">
+					<ul class="pagination pagination-lg">
 						<?php if($pagination->total_pages() > 1) {
 							for($i=1; $i <= $pagination->total_pages(); $i++) {
 								if($i == $page) {
