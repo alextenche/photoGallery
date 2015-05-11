@@ -1,9 +1,10 @@
-<!doctype html>
-<html> 
+<!DOCTYPE html>
+<html>
+
 <head>
-  <meta name="author" content="Tenche Alexandru">
+  <meta name="author" content="Alexandru Tenche">
   <title>photoGallery</title>
-  <link rel="stylesheet" href="../public/css/bootstrap.css">
+  <link rel="stylesheet" href="../public/css/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/main.css">
 </head>
 

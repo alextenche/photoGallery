@@ -1,9 +1,10 @@
 <?php
 
-function __autoload($class_name){
-	$class_name = strtolower($class_name);
+function __autoload( $class_name ){
+
+	$class_name = strtolower( $class_name );
 	$path = LIB_PATH.DS."{$class_name}.php";
-	if(file_exists($path)){
+	if( file_exists($path) ){
 		require_once($path);
 	} else {
 		die("The file {$class_name}.php could not be found.");
@@ -11,7 +12,8 @@ function __autoload($class_name){
 }
 
 
-function strip_zeros_from_date( $marked_string="" ) {
+function strip_zeros_from_date( $marked_string = "" ) {
+
   // first remove the marked zeros
   $no_zeros = str_replace('*0', '', $marked_string);
   // then remove any remaining marks
@@ -21,6 +23,7 @@ function strip_zeros_from_date( $marked_string="" ) {
 
 
 function redirect_to( $location = NULL ) {
+	
   if ($location != NULL) {
     header("Location: {$location}");
     exit;

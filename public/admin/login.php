@@ -1,15 +1,17 @@
-<?php require_once('../../includes/initialize.php');
+<?php 
 
-if($session->is_logged_in()) {
+require_once('../../includes/initialize.php');
+
+if( $session->is_logged_in() ) {
 	redirect_to("index.php");
 }
 
-// Remember to give your form's submit tag a name="submit" attribute!
-if (isset($_POST['submit'])) { // Form has been submitted.
+// Form has been submitted.
+if (isset($_POST['submit'])) { 
 
 	$username = trim($_POST['username']);
 	$password = trim($_POST['password']);
-  
+
 	// Check database to see if username/password exist.
 	$found_user = User::authenticate($username, $password);
 	
@@ -26,42 +28,48 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 	$password = "";
 }?>
 
-<html>
-  <head>
-    <title>Photo Gallery</title>
-    <link href="../stylesheets/main.css" media="all" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <div id="header">
-      <h1>Photo Gallery</h1>
-    </div>
-    <div id="main">
-		<h2>Staff Login</h2>
-		<?php //echo output_message($message); ?>
+<?php include_layout_template('admin_header.php'); ?>
 
-		<form action="login.php" method="post">
-		  <table>
-		    <tr>
-		      <td>Username:</td>
-		      <td>
-		        <input type="text" name="username" maxlength="30" value="<?php echo htmlentities($username); ?>" />
-		      </td>
-		    </tr>
-		    <tr>
-		      <td>Password:</td>
-		      <td>
-		        <input type="password" name="password" maxlength="30" value="<?php echo htmlentities($password); ?>" />
-		      </td>
-		    </tr>
-		    <tr>
-		      <td colspan="2">
-		        <input type="submit" name="submit" value="Login" />
-		      </td>
-		    </tr>
-		  </table>
-		</form>
-    </div>
-    <div id="footer">alexTenche <?php echo date("Y", time()); ?></div>
-  </body>
+<div class="container">
+
+	<form class="form-horizontal" action="login.php" method="post">
+		<fieldset>
+			<legend>Login</legend>
+
+			<div class="form-group">
+				<label for="inputEmail" class="col-lg-2 control-label">Email</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" name="username" maxlength="30" id="inputEmail" 
+						value="<?php echo htmlentities($username); ?>" placeholder="Email">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="inputPassword" class="col-lg-2 control-label">Password</label>
+				<div class="col-lg-10">
+					<input type="password" class="form-control" id="inputPassword" name="password" maxlength="30" 
+						value="<?php echo htmlentities($password); ?>" placeholder="Password">
+				</div>
+			</div>
+	
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					<button type="reset" class="btn btn-default">Cancel</button>
+					<button type="submit" name="submit" class="btn btn-primary">Log In</button>
+				</div>
+			</div>
+
+		</fieldset>
+	</form><!-- end form -->
+
+
+	<?php //echo output_message($message); ?>
+
+	
+					
+		
+</div>
+<div id="footer">alexTenche <?php echo date("Y", time()); ?></div>
+</body>
 </html>
 <?php if(isset($database)) { $database->close_connection(); } ?>

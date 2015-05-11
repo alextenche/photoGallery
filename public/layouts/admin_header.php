@@ -1,10 +1,11 @@
-<!doctype html>
-<html> 
+<!DOCTYPE html>
+<html>
+
 <head>
-  <meta name="author" content="Tenche Alexandru">
-  <title>photoGallery</title>
-  <link rel="stylesheet" href="../css/bootstrap.css">
-  
+  <meta name="author" content="Alexandru Tenche">
+  <title>photoGallery - admin</title>
+  <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../public/css/main.css">
   <style type="text/css">
 
     @media all and (max-width: 1200px) { /* screen size until 1200px */
@@ -60,7 +61,7 @@
     <div class="container">
       <div class="navbar-header">
 
-        <a href="/photoGallery/public/index.php" class="navbar-brand">alexTenche</a>
+        <a href="/photoGallery/public/index.php" class="navbar-brand"> photoGallery - adminArea </a>
 
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
@@ -78,15 +79,7 @@
           <li><a href="#div3">Download</a></li>
         </ul>-->
 
-        <form class="navbar-form navbar-right">
-          <div class="form-group">
-            <input type="email" class="form-control" placeholder="Email">
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password">
-          </div>
-          <button type="submit" class="btn btn-success">Log In</button>
-        </form>
+        
       </div>
 
     </div>

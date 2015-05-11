@@ -1,4 +1,5 @@
 <?php 
+
 require_once("../includes/initialize.php");
 
 $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;

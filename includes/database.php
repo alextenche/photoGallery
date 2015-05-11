@@ -1,13 +1,15 @@
 <?php
+
 require_once(LIB_PATH.DS.'config.php');
 
-class MySQLDatabase{
+class Database{
 
 	private $connection;
-	public $last_query;
+	public  $last_query;
 	private $magic_quotes_active;
 	private $real_escape_string_exists;
 	
+
 	
 	function __construct(){
 		$this->open_connection();
@@ -16,34 +18,51 @@ class MySQLDatabase{
 	}
 
 	
-	// open database connection
-	public function open_connection(){
-		$this->connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) 
-		or die("Database connection failed: " . mysqli_error($connection));
-	}
-	
-	
-	// close database connection
-	public function close_connection(){
-	
-		if(isset($this->connection)){
-			mysqli_close($this->connection);
-			unset($this->connection);
+
+	// open database connection - PDO
+	public function open_connection () {
+
+		try{
+			$this->connection = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USER, DB_PASS);
+			$this->connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+			$this->connection->exec("SET NAMES 'utf8'");
+		} catch (Exception $e){
+			echo "Could not connect to the databse - PDO connection";
+		exit;
 		}
 	}
 	
+
 	
-	// query database
-	public function query($sql){
-		$this->last_query = $sql;
-		$result = mysqli_query($this->connection, $sql );
-		$this->confirm_query($result);
-		return $result;
+	// close database connection - PDO
+	public function close_connection(){
+
+		$this->connection = null;
 	}
 	
 	
+
+	// query database - PDO
+	public function query ( $sql ) {
+
+		$this->last_query = $sql;
+
+		try{
+			$result = $this->connection->query($sql);
+		}catch (Exception $e){
+			echo "Data could not be retrieved from database - query()";
+			exit;
+		}
+
+		//$this->displayQuery($result);
+		return $result;		
+	}
+
+
+
+
 	// prepare a string to be inserted in a database
-	public function escape_value( $value ) {
+	/*public function escape_value( $value ) {
 		if( $this->real_escape_string_exists ) { // PHP v4.3.0 or higher
 			// undo any magic quote effects so mysql_real_escape_string can do the work
 			if( $this->magic_quotes_active ) { $value = stripslashes( $value ); }
@@ -54,19 +73,29 @@ class MySQLDatabase{
 			// if magic quotes are active, then the slashes already exist
 		}
 		return $value;
-	}
+	}*/
 	
+
 	
+
 	// fetch array(to be used if we have other database than mysql)
-	public function fetch_array($result_set){
-		return mysqli_fetch_array($result_set);
+	public function fetch_array( $result_set ){
+
+		return $result_set->fetch(PDO::FETCH_ASSOC);
 	}
 	
-	
-	public function num_rows($result_set){
-		return mysqli_num_rows($result_set);
+
+
+
+	// count number of rows
+	public function num_rows( $result_set ){
+
+		return $result_set->fetchColumn();
+		//return mysqli_num_rows($result_set);
 	}
 	
+
+
 	// returns the last id inserted over the current db connection
 	public function insert_id(){
 		return mysqli_insert_id($this->connection);
@@ -79,9 +108,10 @@ class MySQLDatabase{
 	
 	
 	
-	// confirm query
-	private function confirm_query($result) {
-		if (!$result) {
+	// confirm query - PDO
+	private function confirm_query( $result ) {
+
+		if ( !$result ) {
 			$output  = "Database query failed: ". mysqli_error($this->connection) . "<br /><br />";
 			$output .= "Last SQL query: " . $this->last_query;
 			die($output);
@@ -91,4 +121,4 @@ class MySQLDatabase{
 }
 
 
-$database = new MySQLDatabase();
+$database = new Database();
