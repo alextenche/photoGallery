@@ -25,10 +25,6 @@ class User extends DatabaseObject{
 	
 	public static function authenticate( $username = "", $password = "" ) {
 
-		global $database;
-		$username = $database->$username;
-		$password = $database->$password;
-
 		$sql  = "SELECT * FROM users ";
 		$sql .= "WHERE username = '{$username}' ";
 		$sql .= "AND password = '{$password}' ";
@@ -127,6 +123,7 @@ class User extends DatabaseObject{
 	
 	// create a new user
 	public function create() {
+		
 		global $database;
 		$attributes = $this->sanitized_attributes();
 

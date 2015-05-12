@@ -1,4 +1,6 @@
-<?php require_once(LIB_PATH.DS.'database.php');
+<?php 
+
+require_once(LIB_PATH.DS.'database.php');
 require_once("initialize.php");
 
 class Comment extends DatabaseObject {
@@ -47,7 +49,7 @@ class Comment extends DatabaseObject {
 	}*/
 	
 	
-	public static function make($photo_id, $author = "", $body = "") {
+	public static function make( $photo_id, $author = "", $body = "" ) {
 		date_default_timezone_set('Europe/Bucharest');
 		
 		if(!empty($photo_id) && !empty($body)) {
@@ -70,10 +72,12 @@ class Comment extends DatabaseObject {
 	
 	
 	// return all the comments of a photograph
-	public static function find_comments_on($photo_id = 0) {
+	public static function find_comments_on( $photo_id = 0 ) {
+
 		global $database;
+
 		$sql  = "SELECT * FROM " . self::$table_name;
-		$sql .= " WHERE photograph_id=" .$database->escape_value($photo_id);
+		$sql .= " WHERE photograph_id=" .$photo_id;
 		$sql .= " ORDER BY created ASC";
 		return self::find_by_sql($sql);
 	}

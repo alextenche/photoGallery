@@ -7,15 +7,21 @@ if ( !$session->is_logged_in() ) {
 }?>
 
 <?php include_layout_template('admin_header.php'); ?>
+	
+	<div class="container">
 
-	<h2>Menu</h2>
-	
-	<?php echo output_message($message); ?>
-	
-	<ul>
-		<li><a href="list_photos.php">List Photos</a></li>
-		<li><a href="logfile.php">View Log file</a></li>
-		<li><a href="logout.php">Logout</a></li>
-	</ul>
+		<h2>Menu</h2>	
+		<hr>
+
+		<a href="list_photos.php" class="btn btn-primary btn-lg btn-success"> List Photos </a>
+		<br><br>
+		<a href="logfile.php" class="btn btn-primary btn-lg btn-info"> View Log file </a>
+		<br><br>
+		<a href="logout.php" class="btn btn-primary btn-lg btn-danger"> Logout </a>
+		<br><br>
+
+		<?php echo output_message($message); ?>
+
+	</div>
 
 <?php include_layout_template('admin_footer.php'); ?>

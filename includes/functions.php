@@ -23,7 +23,7 @@ function strip_zeros_from_date( $marked_string = "" ) {
 
 
 function redirect_to( $location = NULL ) {
-	
+
   if ($location != NULL) {
     header("Location: {$location}");
     exit;
@@ -40,29 +40,34 @@ function output_message($message="") {
 }
 
 
-function include_layout_template($template = ""){
+function include_layout_template( $template = "" ){
+
 	include(SITE_ROOT.DS.'public'.DS.'layouts'.DS.$template);
 }
 
 
 // better date-time display
-function datetime_to_text($datetime = ""){
+function datetime_to_text( $datetime = "" ){
+
 	$unixdatetime = strtotime($datetime);
 	return strftime("%B %d, %Y at %I:%M %p", $unixdatetime);
 }
 
 
-function log_action($action, $message = ""){
+function log_action( $action, $message = "" ){
+	
 	date_default_timezone_set('Europe/Bucharest');
-
 	$logfile = SITE_ROOT.DS.'logs'.DS.'log.txt';
+
 	$new = file_exists($logfile)? false : true;
-	if($handle = fopen($logfile, 'a')) { // append
+	if( $handle = fopen($logfile, 'a') ) { // append
 		$timestamp = strftime("%d-%m-%Y %H:%M:%S", time());
 		$content = "{$timestamp} | {$action} : {$message}\n";
 		fwrite($handle, $content);
 		fclose($handle);
-		if($new){chmod($logfile, 0755);}
+		if( $new ){
+			chmod($logfile, 0755);
+		}
 	} else {
 		echo "Could not open file for writing.";
 	}
