@@ -98,7 +98,8 @@ class Database{
 
 	// returns the last id inserted over the current db connection
 	public function insert_id(){
-		return mysqli_insert_id($this->connection);
+		//return mysqli_insert_id();
+		return $this->connection->lastInsertId();
 	}
 	
 	

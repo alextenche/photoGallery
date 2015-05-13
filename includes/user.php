@@ -5,12 +5,11 @@ require_once(LIB_PATH.DS.'database.php');
 class User extends DatabaseObject{
 
 	protected static $table_name = "users";
-	protected static $db_fields = array('id', 'username', 'password', 'first_name', 'last_name');
+	protected static $db_fields = array('id', 'username', 'email', 'password');
 	public $id;
 	public $username;
+	public $email;
 	public $password;
-	public $first_name;
-	public $last_name;
 	
 	
 	public function full_name(){
@@ -109,7 +108,7 @@ class User extends DatabaseObject{
 		$clean_attributes = array();
 		
 		foreach($this->attributes() as $key => $value){
-			$clean_attributes[$key] = $database->escape_value($value);
+			$clean_attributes[$key] = $value;
 		}
 		return $clean_attributes;
 	}
@@ -117,6 +116,7 @@ class User extends DatabaseObject{
 	
 	// save user - create if does not exist or update if exists
 	public function save(){
+		
 		return isset($this->id) ? $this->update() : $this->create();
 	}
 	
