@@ -12,25 +12,38 @@ class User extends DatabaseObject{
 	public $password;
 	
 	
-	public function full_name(){
+	// check if user and password combination exists in database
+	public static function authenticate( $email = "", $password = "" ) {
 
-		if( isset($this->first_name) && isset($this->last_name) ){
-			return $this->first_name . " " . $this->last_name; 
-		} else {
-			return "";
-		}
-	}
-	
-	
-	public static function authenticate( $username = "", $password = "" ) {
-
-		$sql  = "SELECT * FROM users ";
-		$sql .= "WHERE username = '{$username}' ";
-		$sql .= "AND password = '{$password}' ";
-		$sql .= "LIMIT 1";
+		$sql  = "SELECT * FROM users WHERE email = '{$email}' 
+									   AND password = '{$password}'
+				LIMIT 1";
 		$result_array = self::find_by_sql($sql);
 		return !empty($result_array) ? array_shift($result_array) : false;
 	}
+
+
+	// check if email used for registartion already exists
+	public static function check_email( $email ){
+
+		global $database;
+	
+		try{
+			$results = $database->connection->prepare("SELECT email FROM ".self::$table_name." WHERE email = :email LIMIT 1");
+			$results->bindValue(':email', $email, PDO::PARAM_STR);
+			$results->execute();
+		} catch (Exception $e){
+			echo "Data could not be retrieved from the database - check_email";
+			exit;
+		}
+
+		if( $results->rowCount() == 1 ){
+			return true;
+		} else {
+			return false;
+		} 
+}
+
 	
 	
 	// Common Database Methods
@@ -121,58 +134,58 @@ class User extends DatabaseObject{
 	}
 	
 	
-	// create a new user
+	// create a new user - PDO
 	public function create() {
 		
 		global $database;
-		$attributes = $this->sanitized_attributes();
 
-		$sql  = "INSERT INTO ".self::$table_name." (";
-		$sql .= join(", ", array_keys($attributes));
-		$sql .= ") VALUES ('";
-		$sql .= join("', '", array_values($attributes));
-		$sql .= "')";
+		$sql  = "INSERT INTO users ( id, username, email, password )
+		         VALUES ( :id, :username, :email, :password )";
+		$result = $database->connection->prepare( $sql );
+		$result->bindParam(':id', $this->id, PDO::PARAM_INT);
+		$result->bindParam(':username', $this->username, PDO::PARAM_STR);       
+		$result->bindParam(':email', $this->email, PDO::PARAM_STR);       
+		$result->bindParam(':password', $this->password, PDO::PARAM_STR);    
+		$result->execute(); 
 		
-		if($database->query($sql)) {
-			$this->id = $database->insert_id();
-			return true;
-		} else {
-			return false;
-		}
+		return ($result->rowCount() == 1) ? true : false;
 	}
 	
 	
 
-	// update an existing user
+	// update an existing user - PDO
 	public function update() {
-		global $database;
-		$attributes = $this->sanitized_attributes();
-		$attribute_pairs = array();
-		foreach($attributes as $key => $value) {
-			$attribute_pairs[] = "{$key}='{$value}'";
-		}
 
-		$sql  = "UPDATE ".self::$table_name." SET ";
-		$sql .= join(", ", $attribute_pairs);
-		$sql .= " WHERE id=". $database->escape_value($this->id);
-		
-		$database->query($sql);
-		return ($database->affected_rows() == 1) ? true : false;
+		global $database;
+
+		$sql = "UPDATE users 
+				SET username = :username, 
+            	    password = :password
+                WHERE id = :id";
+        $result = $database->connection->prepare( $sql );
+		$result->bindParam(':username', $this->username, PDO::PARAM_STR);
+		$result->bindParam(':password', $this->password, PDO::PARAM_STR);
+		$result->bindParam(':id', $this->id, PDO::PARAM_INT);
+		$result->execute();
+
+		return ($result->rowCount() == 1) ? true : false;
 	}
 	
-
 	
-	// delete user
+	// delete user - must transform to PDO
 	public function delete() {
+
 		global $database;
 		
-		$sql  = "DELETE FROM ".self::$table_name." ";
-		$sql .= "WHERE id=". $database->escape_value($this->id);
-		$sql .= " LIMIT 1";
-		$database->query($sql);
-			return ($database->affected_rows() == 1) ? true : false;
-	
-		// After deleting, the instance of User still exists, even though the database entry does not.
-		// This can be useful, as in: echo $user->first_name . " was deleted";
+		$sql  = "DELETE FROM users 
+		         WHERE id = :id 
+		         LIMIT 1";
+		$result = $database->connection->prepare( $sql );      
+		$result->bindParam(':id', $this->id, PDO::PARAM_INT);
+		$result->execute();
+
+		return ($result->rowCount() == 1) ? true : false;
 	}
+
+
 }

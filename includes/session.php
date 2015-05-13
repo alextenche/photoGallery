@@ -27,6 +27,7 @@ class Session{
 	
 	
 	public function login( $user ){
+
 		// database should find user based on username/password
 		if($user){
 			$this->user_id = $_SESSION['user_id'] =  $user->id;
@@ -34,18 +35,20 @@ class Session{
 		}
 	}
 	
-	
+
+	// logout user
 	public function logout( $user ){
 
 		unset($_SESSION['user_id']);
 		unset($this->user_id);
 		$this->logged_in = false;
 	}
+
 	
+	// gets or sets a message
+	public function message( $msg = "" ) {
 
-	public function message($msg = "") {
-
-		if(!empty($msg)) {
+		if( !empty($msg) ) {
 			$_SESSION['message'] = $msg;
 		} else {
 			return $this->message;
@@ -53,6 +56,7 @@ class Session{
 	}
 	
 	
+	//
 	private function check_login(){
 
 		if( isset($_SESSION['user_id']) ){
@@ -73,6 +77,10 @@ class Session{
 		} else {
 			$this->message = "";
 		}
+	}
+
+	public function get_user_name (){
+		
 	}
 }
 

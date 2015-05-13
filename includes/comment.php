@@ -163,22 +163,22 @@ class Comment extends DatabaseObject {
 	}
 	
 
+	// create a new comment - PDO
 	public function create() {
-		global $database;
-		
-		$attributes = $this->sanitized_attributes();
-		$sql = "INSERT INTO ".self::$table_name." (";
-		$sql .= join(", ", array_keys($attributes));
-		$sql .= ") VALUES ('";
-		$sql .= join("', '", array_values($attributes));
-		$sql .= "')";
 
-		if($database->query($sql)) {
-			$this->id = $database->insert_id();
-			return true;
-		} else {
-			return false;
-		}
+		global $database;
+
+		$sql  = "INSERT INTO comments ( id, photograph_id, created, author, body ) 
+		         VALUES ( :id, :photograph_id, :created, :author, :body )";
+		$result = $database->connection->prepare( $sql );
+		$result->bindParam(':id', $this->id, PDO::PARAM_INT);
+		$result->bindParam(':photograph_id', $this->photograph_id , PDO::PARAM_INT);
+		$result->bindParam(':created', $this->created , PDO::PARAM_INT);
+		$result->bindParam(':author', $this->author, PDO::PARAM_STR);
+		$result->bindParam(':body', $this->body, PDO::PARAM_STR);
+		$result->execute(); 
+		
+		return ($result->rowCount() == 1) ? true : false;
 	}
 
 

@@ -3,6 +3,7 @@
 <head>
     <meta name="author" content="Alexandru Tenche">
     <title><?php echo $pageTitle; ?></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/main.css">
 </head>
@@ -47,17 +48,24 @@
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>-->
 
-                <?php if ( $session->is_logged_in() ) : ?>
+                <?php if ( $session->is_logged_in() ) : 
+                    $user = User::find_by_id($session->user_id); ?>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"> logged as Username </li></a>
-                        <li <?php if( $section == 'listphotos') {echo 'class="active"';} ?>><a href="list_photos.php"> List Photos </a></li>
-                        <li <?php if( $section == 'logfile') {echo 'class="active"';} ?>><a href="logfile.php"> View Log file </a></li>
-                        <li><a href="logout.php"> Log Out </a></li>
+                        <li><a href="#"> logged as <?php echo $user->username; ?> </li></a>
+                        <li <?php if( $section == 'listphotos') {echo 'class="active"';} ?>><a href="list_photos.php">
+                            <span class="glyphicon glyphicon-list"> </span> List Photos </a></li>
+                        <li <?php if( $section == 'logfile') {echo 'class="active"';} ?>><a href="logfile.php">
+                            <span class="glyphicon glyphicon-list-alt"> </span> View Log file </a></li>
+                        <li <?php if( $section == 'settings') {echo 'class="active"';} ?>><a href="settings.php">
+                            <span class="glyphicon glyphicon-user"> </span> Settings </a></li>
+                        <li><a href="logout.php"> <span class="glyphicon glyphicon-log-out"> </span> Log Out </a></li>
                     </ul>
                 <?php else : ?>
                     <ul class="nav navbar-nav navbar-right">
-                        <li <?php if( $section == 'login') {echo 'class="active"';} ?>><a href="login.php"> Log In </a></li>
-                        <li <?php if( $section == 'signup') {echo 'class="active"';} ?>><a href="signup.php"> Sign Up </a></li>
+                        <li <?php if( $section == 'login') {echo 'class="active"';} ?>><a href="login.php">
+                            <span class="glyphicon glyphicon-log-in"></span> &nbsp;Log In </a></li>
+                        <li <?php if( $section == 'signup') {echo 'class="active"';} ?>><a href="signup.php">
+                            <span class="glyphicon glyphicon-edit"> </span> &nbsp;Sign Up </a></li>
                     </ul>
                 <?php endif; ?>
 

@@ -4,7 +4,7 @@ require_once(LIB_PATH.DS.'config.php');
 
 class Database{
 
-	private $connection;
+	public  $connection;
 	public  $last_query;
 	private $magic_quotes_active;
 	private $real_escape_string_exists;
@@ -50,32 +50,13 @@ class Database{
 		try{
 			$result = $this->connection->query($sql);
 		}catch (Exception $e){
-			echo "Data could not be retrieved from database - query()";
+			echo "Data could not be retrieved from database - query() aici";
 			exit;
 		}
 
 		//$this->displayQuery($result);
 		return $result;		
 	}
-
-
-
-
-	// prepare a string to be inserted in a database
-	/*public function escape_value( $value ) {
-		if( $this->real_escape_string_exists ) { // PHP v4.3.0 or higher
-			// undo any magic quote effects so mysql_real_escape_string can do the work
-			if( $this->magic_quotes_active ) { $value = stripslashes( $value ); }
-			$value = mysqli_real_escape_string($this->connection, $value );
-		} else { // before PHP v4.3.0
-			// if magic quotes aren't already on then add slashes manually
-			if( !$this->magic_quotes_active ) { $value = addslashes( $value ); }
-			// if magic quotes are active, then the slashes already exist
-		}
-		return $value;
-	}*/
-	
-
 	
 
 	// fetch array(to be used if we have other database than mysql)
@@ -84,7 +65,6 @@ class Database{
 		return $result_set->fetch(PDO::FETCH_ASSOC);
 	}
 	
-
 
 
 	// count number of rows
@@ -98,13 +78,15 @@ class Database{
 
 	// returns the last id inserted over the current db connection
 	public function insert_id(){
+		
 		//return mysqli_insert_id();
 		return $this->connection->lastInsertId();
 	}
 	
 	
 	public function affected_rows(){
-		return mysqli_affected_rows($this->connection);
+
+		return $this->connection->rowCount();
 	}
 	
 	

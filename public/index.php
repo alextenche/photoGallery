@@ -60,4 +60,4 @@ include('layouts/header.php'); ?>
 	</div>
 </div>
 
-<?php include_layout_template('footer.php'); ?>
+<?php include('layouts/footer.php'); ?>

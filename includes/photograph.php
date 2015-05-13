@@ -1,10 +1,13 @@
-<?php require_once(LIB_PATH.DS.'database.php');
+<?php 
+
+require_once(LIB_PATH.DS.'database.php');
 
 class Photograph extends DatabaseObject {
 	
 	protected static $table_name = "photographs";
-	protected static $db_fields = array('id', 'filename', 'type', 'size', 'caption');
+	protected static $db_fields = array('id', 'user_id', 'filename', 'type', 'size', 'caption');
 	public $id;
+	public $user_id;
 	public $filename;
 	public $type;
 	public $size;
@@ -27,7 +30,6 @@ class Photograph extends DatabaseObject {
 	);
 
 
-	
 	// Pass in $_FILE(['uploaded_file']) as an argument
 	public function attach_file($file) {
 		// Perform error checking on the form parameters
@@ -104,7 +106,8 @@ class Photograph extends DatabaseObject {
 	
 	
 	public function image_path() {
-	  return $this->upload_dir.DS.$this->filename;
+
+	  	return $this->upload_dir.DS.$this->filename;
 	}
 	
 	
@@ -130,14 +133,14 @@ class Photograph extends DatabaseObject {
 	
 	// Common Database Methods
 	//----------------------------------------------------------------------------------------------
-	public static function find_all() {
-		return self::find_by_sql("SELECT * FROM ".self::$table_name);
+	public static function find_all( $user_id ) {
+		return self::find_by_sql("SELECT * FROM ".self::$table_name." WHERE user_id = ".$user_id);
 	}
   
   
-	public static function find_by_id($id=0) {
+	public static function find_by_id( $id=0 ) {
 		global $database;
-		$result_array = self::find_by_sql("SELECT * FROM ".self::$table_name." WHERE id=".$database->escape_value($id)." LIMIT 1");
+		$result_array = self::find_by_sql("SELECT * FROM ".self::$table_name." WHERE id=".$id." LIMIT 1");
 		return !empty($result_array) ? array_shift($result_array) : false;
 	}
   
@@ -211,27 +214,27 @@ class Photograph extends DatabaseObject {
 	  }
 	  return $clean_attributes;
 	}
-	
-	
+		
+
+	// create a new user - PDO
 	public function create() {
+		
 		global $database;
-		// Don't forget your SQL syntax and good habits:
-		// - INSERT INTO table (key, key) VALUES ('value', 'value')
-		// - single-quotes around all values
-		// - escape all values to prevent SQL injection
-		$attributes = $this->sanitized_attributes();
-	  $sql = "INSERT INTO ".self::$table_name." (";
-		$sql .= join(", ", array_keys($attributes));
-	  $sql .= ") VALUES ('";
-		$sql .= join("', '", array_values($attributes));
-		$sql .= "')";
-	  if($database->query($sql)) {
-	    $this->id = $database->insert_id();
-	    return true;
-	  } else {
-	    return false;
-	  }
+
+		$sql  = "INSERT INTO photographs ( id, user_id, filename, type, size, caption )
+		         VALUES ( :id, :user_id, :filename, :type, :size, :caption )";
+		$result = $database->connection->prepare( $sql );
+		$result->bindParam(':id', $this->id, PDO::PARAM_INT);
+		$result->bindParam(':user_id', $this->user_id, PDO::PARAM_INT);
+		$result->bindParam(':filename', $this->filename, PDO::PARAM_STR);
+		$result->bindParam(':type', $this->type, PDO::PARAM_STR);
+		$result->bindParam(':size', $this->size, PDO::PARAM_INT);
+		$result->bindParam(':caption', $this->caption, PDO::PARAM_STR);
+		$result->execute(); 
+		
+		return ($result->rowCount() == 1) ? true : false;
 	}
+
 
 	public function update() {
 	  global $database;
@@ -251,24 +254,19 @@ class Photograph extends DatabaseObject {
 	  return ($database->affected_rows() == 1) ? true : false;
 	}
 
+
+	// delete photo - PDO
 	public function delete() {
+
 		global $database;
-		// Don't forget your SQL syntax and good habits:
-		// - DELETE FROM table WHERE condition LIMIT 1
-		// - escape all values to prevent SQL injection
-		// - use LIMIT 1
-	  $sql = "DELETE FROM ".self::$table_name;
-	  $sql .= " WHERE id=". $database->escape_value($this->id);
-	  $sql .= " LIMIT 1";
-	  $database->query($sql);
-	  return ($database->affected_rows() == 1) ? true : false;
-	
-		// After deleting, the instance of User still exists, even though the database entry does not.
-		// This can be useful, as in: echo $user->first_name . " was deleted";
-		// but, for example, we can't call $user->update() after calling $user->delete().
+		
+		$sql  = "DELETE FROM ". self::$table_name .
+		       " WHERE id = :id LIMIT 1";
+		$result = $database->connection->prepare( $sql );      
+		$result->bindParam(':id', $this->id, PDO::PARAM_INT);
+		$result->execute();
+
+		return ($result->rowCount() == 1) ? true : false;
 	}
-
-	
+		
 }
-
-?>

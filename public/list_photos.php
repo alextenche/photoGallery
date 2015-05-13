@@ -9,7 +9,7 @@ if (!$session->is_logged_in()) {
 $pageTitle = "photoGallery - photos list";
 $section = "listphotos";
 
-$photos = Photograph::find_all();
+$photos = Photograph::find_all($session->user_id);
 
 include('layouts/header.php'); ?>
 
@@ -35,7 +35,7 @@ include('layouts/header.php'); ?>
 			</tr>
 			<?php foreach($photos as $photo): ?>
 				<tr>
-					<td><img src="../<?php echo $photo->image_path(); ?>" width="100" /></td>
+					<td><img src="../public/<?php echo $photo->image_path(); ?>" width="100" /></td>
 					<td><?php echo $photo->filename; ?></td>
 					<td><?php echo $photo->caption; ?></td>
 					<td><?php echo $photo->size_as_text(); ?></td>
@@ -55,4 +55,4 @@ include('layouts/header.php'); ?>
 	</div>
 </div>
 
-<?php include_layout_template('admin_footer.php'); ?>
+<?php include('layouts/footer.php'); ?>

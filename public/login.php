@@ -12,11 +12,11 @@ if( $session->is_logged_in() ) {
 // Form has been submitted.
 if (isset($_POST['submit'])) { 
 
-	$username = trim($_POST['username']);
+	$email = trim($_POST['email']);
 	$password = trim($_POST['password']);
 
 	// Check database to see if username/password exist.
-	$found_user = User::authenticate($username, $password);
+	$found_user = User::authenticate($email, $password);
 	
 	if ($found_user) {
 		$session->login($found_user);
@@ -24,10 +24,10 @@ if (isset($_POST['submit'])) {
 		redirect_to("index.php");
 	} else {
 		// username/password combo was not found in the database
-		$message = "Username/password combination incorrect.";
+		$error = "email/password combination was incorrect.";
 	}
 } else { // Form has not been submitted.
-	$username = "";
+	$email = "";
 	$password = "";
 }?>
 
@@ -40,11 +40,21 @@ if (isset($_POST['submit'])) {
 		<fieldset>
 			<legend> Login </legend>
 
+			<?php if(isset($error) && $error != ""){
+            	echo '<div class="form-group">';
+            	echo '<label for="error" class="col-sm-2 control-label"></label>';
+                echo '<div class="col-sm-10 alert alert-danger" role="alert">';
+                echo $error;
+                $error = "";
+                echo '</div>';
+                echo '</div>';
+            }?>
+
 			<div class="form-group">
 				<label for="inputEmail" class="col-lg-2 control-label">Email</label>
 				<div class="col-lg-10">
-					<input type="text" class="form-control" name="username" maxlength="30" id="inputEmail" 
-						value="<?php echo htmlentities($username); ?>" placeholder="Email">
+					<input type="text" class="form-control" name="email" maxlength="30" id="inputEmail" 
+						value="" placeholder="Email">
 				</div>
 			</div>
 
@@ -52,7 +62,7 @@ if (isset($_POST['submit'])) {
 				<label for="inputPassword" class="col-lg-2 control-label">Password</label>
 				<div class="col-lg-10">
 					<input type="password" class="form-control" id="inputPassword" name="password" maxlength="30" 
-						value="<?php echo htmlentities($password); ?>" placeholder="Password">
+						value="" placeholder="Password">
 				</div>
 			</div>
 	

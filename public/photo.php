@@ -1,9 +1,14 @@
-<?php require_once("../includes/initialize.php");
+<?php 
+
+require_once("../includes/initialize.php");
 
 if(empty($_GET['id'])) {
 	$session->message("No photo ID was provided.");
 	redirect_to('index.php');
 }
+
+$pageTitle = "photoGallery";
+$section = "singlePhoto";
 
 $photo = Photograph::find_by_id($_GET['id']);
 
@@ -17,7 +22,7 @@ if(isset($_POST['submit'])) {
 	$body = trim($_POST['body']);
 	
 	$new_comment = Comment::make($photo->id, $author, $body);
-	if($new_comment && $new_comment->save()) {
+	if( $new_comment && $new_comment->save() ) {
 
 		// send email
 		//$new_comment->try_to_send_notification();
@@ -35,7 +40,7 @@ if(isset($_POST['submit'])) {
 
 $comments = $photo->comments();	?>
 
-<?php include_layout_template('header.php'); ?>
+<?php include('layouts/header.php'); ?>
 
 <div class="container main">
 	<div class="row">

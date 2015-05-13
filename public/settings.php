@@ -2,12 +2,14 @@
 
 require_once('../includes/initialize.php');
 
-if ( $session->is_logged_in() ) {
-	redirect_to("index.php"); 
+if ( !$session->is_logged_in() ) {
+	redirect_to("login.php"); 
 }
 
-$pageTitle = "photoGallery - signup";
-$section = "signup"; 
+$pageTitle = "photoGallery - settings";
+$section = "settings";
+
+$user = User::find_by_id($session->user_id);
 
 // if signup form has been submitted
 if (isset($_POST['submit'])) { 
@@ -16,51 +18,19 @@ if (isset($_POST['submit'])) {
     if( isset($_POST['username']) && !empty($_POST['username']) ){ 
         $username = trim($_POST['username']);
 
-        // check email
-    	if( isset($_POST['email']) && !empty($_POST['email']) ){
-    		$email = trim($_POST['email']);
+        // check password
+    	if( isset($_POST['password']) && !empty($_POST['password']) ){ 
+        	$password = trim($_POST['password']);
 
-        	// check database to see if email already in use.
-			$found_email = User::check_email( $email );
+        	//$user = new User();
+			$user->username = $username;
+			$user->password = $password;
+			$user->update();
+			$message ="User profile updated successfuly";
 
-			//var_dump($found_email);
-			//die;
-
-			if (!$found_email) {
-				
-        		// check password
-    			if( isset($_POST['password']) && !empty($_POST['password']) ){ 
-        			$password = trim($_POST['password']);
-
-        			// all ok, put data into database
-        			//echo "Datele din formularul clientului sunt ok <br>";
-        			//echo "client_name:  " . $client_name . "<br>";
-        			//echo "client_email: " . $client_email . "<br>";
-        			//echo "client_password:  " . $client_password . "<br>";
-
-        			$user = new User();
-					$user->username = $username;
-					$user->email = $email;
-					$user->password = $password;
-					$user->create();
-					$message ="User signed up successfuly";
-					$username = "";
-					$email = "";
-					$password = "";
-
-        		// if missing password, display error	
-    			} else {
-        			$error ="please insert a password";
-    			}
-
-			// if email already exists, display error
-    		} else {
-				$error ="email address already in use, please insert another";
-    		}     			
-
-    	// if missing email, display error
+        // if missing password, display error	
     	} else {
-        	$error ="please insert a valid email address";
+        	$error ="please insert a password";
     	}
 
     // if missing client name, display error
@@ -79,10 +49,10 @@ if (isset($_POST['submit'])) {
 
 <div class="container">
 
-	<form class="form-horizontal" action="signup.php" method="post">
+	<form class="form-horizontal" action="settings.php" method="post">
 
 		<fieldset>
-			<legend> Signup </legend>
+			<legend> <span class="glyphicon glyphicon-user"></span> &nbsp;Settings </legend>
 
 			<?php if(isset($message) && $message != ""){
 				echo '<div class="form-group">';
@@ -108,7 +78,7 @@ if (isset($_POST['submit'])) {
 				<label for="inputName" class="col-sm-2 control-label"> Name </label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="username" maxlength="30" id="inputEmail" 
-						value="<?php if(isset($username)) {echo $username;} ?>" placeholder="your name">
+						value="<?php echo $user->username; ?>" placeholder="your name">
 				</div>
 			</div>
 
@@ -116,15 +86,15 @@ if (isset($_POST['submit'])) {
 				<label for="inputEmail" class="col-sm-2 control-label"> Email </label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="email" maxlength="30" id="inputEmail" 
-						value="<?php if(isset($email)) {echo $email;} ?>" placeholder="email address">
+						value="<?php echo $user->email; ?>" placeholder="email address" readonly>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="inputPassword" class="col-lg-2 control-label"> Password </label>
 				<div class="col-lg-10">
-					<input type="password" class="form-control" id="inputPassword" name="password" maxlength="30" 
-						value="" placeholder="password">
+					<input type="text" class="form-control" id="inputPassword" name="password" maxlength="30" 
+						value="<?php echo $user->password; ?>" placeholder="password">
 				</div>
 			</div>
 
@@ -135,11 +105,17 @@ if (isset($_POST['submit'])) {
 						value="<?php //echo htmlentities($cpassword); ?>" placeholder="retype password">
 				</div>
 			</div>-->
-	
+			
 			<div class="form-group">
 				<div class="col-lg-10 col-lg-offset-2">
-					<button type="reset" class="btn btn-danger"> Cancel </button>
-					<button type="submit" name="submit" class="btn btn-success"> Sign Up </button>
+					<a class="btn btn-danger" href="delete_user.php?id=<?php echo $user->id; ?>"> Delete account </a>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					<button type="reset" class="btn btn-default"> Cancel </button>
+					<button type="submit" name="submit" class="btn btn-success"> Update Settings </button>
 				</div>
 			</div>
 
