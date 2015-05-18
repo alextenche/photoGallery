@@ -146,6 +146,7 @@ class Photograph extends DatabaseObject {
   
 	// counting all for pagination
 	public static function count_all(){
+
 		global $database;
 		$sql = "SELECT COUNT(*) FROM ".self::$table_name;
 		$result_set = $database->query($sql);
@@ -154,7 +155,8 @@ class Photograph extends DatabaseObject {
 	}
   
   
-	public static function find_by_sql($sql="") {
+	public static function find_by_sql( $sql="" ) {
+		
 		global $database;
 		$result_set = $database->query($sql);
 		$object_array = array();

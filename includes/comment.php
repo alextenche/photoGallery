@@ -16,37 +16,41 @@ class Comment extends DatabaseObject {
 
 	
 	// try to send an email for an added comment
-	/*public function try_to_send_notification(){
+	public function try_to_send_notification(){
 		
 		$mail = new PHPMailer();
 
 		$mail->IsSMTP();
 		$mail->SMTPAuth      = true;   
 		$mail->SMTPKeepAlive = true;   
-		$mail->Host          = 'smtp.gmail.com'; 
+		$mail->Host          = '***';
 		$mail->Port          = 465;
 		$mail->SMTPSecure    = 'ssl';
-		$mail->Username      = ;
-		$mail->Password      = ;
-		$mail->SetFrom('');
-		$mail->AddReplyTo('');
+		$mail->Username      = '***';
+		$mail->Password      = '***';
+		$mail->SetFrom('***', 'eCommerce');
+		$mail->AddReplyTo('***', 'eCommerce');
 
-		$mail->FromName = "Sender Name";
-		$mail->From     = "";
-		$mail->AddAddress("");
-		$mail->Subject  = "Mail Test at ".strftime("%T", time());
-		$mail->Body     = $message;
-		$message = wordwrap($message,70);	
+		$mail->FromName = "photoGallery";
+		$mail->From     = "***";
+		$mail->AddAddress("***", "photoGallery admin");
+		$mail->Subject  = "new photoGallery comment";
+
 		$created = datetime_to_text($this->created);
-		$mail->Body     = <<< EMAILBODY
-		A new comment has been received in Photo Gallery
-		At {$this->created}, {$this->author} wrote:
-		{$this->body}	
-		EMAILBODY;
+
+		$mail->Body     =<<<EMAILBODY
+
+A new comment has been received in Photo Gallery.
+
+At {$this->created}, {$this->author} wrote:
+
+{$this->body}
+
+EMAILBODY;
+
 		$result = $mail->Send();
-		echo $result ? 'Sent' : 'Error';
 		return $result ;
-	}*/
+	}
 	
 	
 	public static function make( $photo_id, $author = "", $body = "" ) {
