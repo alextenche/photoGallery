@@ -42,7 +42,7 @@ class User extends DatabaseObject{
 		} else {
 			return false;
 		} 
-}
+	}
 
 	
 	

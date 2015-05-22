@@ -23,9 +23,6 @@ if (isset($_POST['submit'])) {
         	// check database to see if email already in use.
 			$found_email = User::check_email( $email );
 
-			//var_dump($found_email);
-			//die;
-
 			if (!$found_email) {
 				
         		// check password
