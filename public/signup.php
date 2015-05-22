@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
         			$user = new User();
 					$user->username = $username;
 					$user->email = $email;
-					$user->password = $password;
+					$user->password = md5($password);
 					$user->create();
 					$message ="User signed up successfuly";
 					$username = "";

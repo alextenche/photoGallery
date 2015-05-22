@@ -13,7 +13,7 @@ if( $session->is_logged_in() ) {
 if (isset($_POST['submit'])) { 
 
 	$email = trim($_POST['email']);
-	$password = trim($_POST['password']);
+	$password = md5(trim($_POST['password']));
 
 	// Check database to see if username/password exist.
 	$found_user = User::authenticate($email, $password);
