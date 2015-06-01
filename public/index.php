@@ -28,36 +28,43 @@ include('layouts/header.php'); ?>
 </div>
 
 <div class="container main">
-	<div class="row">
-		<!--<h1 class="page-header">photoGallery</h1>-->
 
+	<div class="row js-masonry" id="masonry-container">
 		<?php foreach($photos as $photo): ?>
-			<div class="col-lg-4 col-md-4 col-xs-6 thumb">
-				<a class="thumbnail"  href="photo.php?id=<?php echo $photo->id; ?>">
-					<img class="img-responsive" src="<?php echo $photo->image_path(); ?>" alt="">
-				</a>
-				<p style="text-align:center;"><?php echo $photo->caption; ?></p>
+			<div class="col-sm-6 col-md-4 item">
+				<div class="thumbnail">
+					<a href="photo.php?id=<?php echo $photo->id; ?>">
+						<img src="<?php echo $photo->image_path(); ?>" alt="">
+					</a>
+					<div class="caption">
+	             		<h4> <?php echo $photo->caption; ?> </h4>
+	           		</div>
+						
+				</div>
 			</div>
 		<?php endforeach; ?>
+	</div> <!-- end row -->
 
-		<div class="row">
-			<div class="col-xs-4 col-xs-offset-5">
-				<nav>
-					<ul class="pagination pagination-lg">
-						<?php if($pagination->total_pages() > 1) {
-							for($i=1; $i <= $pagination->total_pages(); $i++) {
-								if($i == $page) {
-									echo '<li class="active"><a href="#">'.$i.'<span class="sr-only">(current)</span></a></li>';
-								} else {
-									echo '<li><a href="index.php?page='.$i.'">'.$i.'</a></li>'; 
-								}
+	<hr>
+
+	<div class="row"> <!-- pagination row -->
+		<div class="col-xs-4 col-xs-offset-5">
+			<nav>
+				<ul class="pagination pagination-lg">
+					<?php if($pagination->total_pages() > 1) {
+						for($i=1; $i <= $pagination->total_pages(); $i++) {
+							if($i == $page) {
+								echo '<li class="active"><a href="#">'.$i.'<span class="sr-only">(current)</span></a></li>';
+							} else {
+								echo '<li><a href="index.php?page='.$i.'">'.$i.'</a></li>'; 
 							}
-						}?>
-					</ul>
-				</nav>
-			</div>
+						}
+					}?>
+				</ul>
+			</nav>
 		</div>
-	</div>
-</div>
+	</div><!-- end pagination row -->
+	
+</div><!-- end container -->
 
 <?php include('layouts/footer.php'); ?>

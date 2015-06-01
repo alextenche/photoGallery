@@ -8,6 +8,8 @@
     <!-- Latest compiled and minified JavaScript for Bootstrap -->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="js/imagesloaded.pkgd.min.js"></script>
+	<script src="js/masonry.pkgd.min.js"></script>
 
 </body>
 </html>
