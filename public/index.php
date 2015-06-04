@@ -29,9 +29,9 @@ include('layouts/header.php'); ?>
 
 <div class="container main">
 
-	<div class="row js-masonry" id="masonry-container">
+	<div class="row grid">
 		<?php foreach($photos as $photo): ?>
-			<div class="col-sm-6 col-md-4 item">
+			<div class="col-sm-4 col-md-3 item">
 				<div class="thumbnail">
 					<a href="photo.php?id=<?php echo $photo->id; ?>">
 						<img src="<?php echo $photo->image_path(); ?>" alt="">
@@ -64,7 +64,21 @@ include('layouts/header.php'); ?>
 			</nav>
 		</div>
 	</div><!-- end pagination row -->
-	
+
+	<hr>
+
 </div><!-- end container -->
+
+<script type="text/javascript">
+
+	var $grid = $('.grid').imagesLoaded( function() {
+	  	// init Masonry after all images have loaded
+	  	$grid.masonry({
+	    	itemSelector: '.item',
+	    	columnWidth: '.item'
+	  	});
+	});	
+
+</script>
 
 <?php include('layouts/footer.php'); ?>

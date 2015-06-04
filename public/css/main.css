@@ -81,3 +81,27 @@ body {
   background-image: url("../images/photoBackground2.jpg");
   background-size: cover;
 }
+
+footer {
+  
+  color: white;
+  text-align: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+footer a:link {
+    color: #aaa;
+}
+
+footer a:visited {
+    color: #aaa;
+}
+
+footer a:hover  {
+    color: #4cae4c;
+}
+
+#alex{
+  vertical-align: 25%;
+}
